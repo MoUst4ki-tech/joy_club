@@ -1,6 +1,5 @@
-/* Variables de couleurs */
 :root {
-    --primary: #6366f1; /* Un violet/bleu moderne */
+    --primary: #6366f1;
     --secondary: #1e293b;
     --accent: #f59e0b;
     --bg-body: #f8fafc;
@@ -22,7 +21,6 @@ body {
     padding: 0 1.5rem;
 }
 
-/* Header */
 header {
     background: linear-gradient(135deg, var(--secondary) 0%, #0f172a 100%);
     color: white;
@@ -38,13 +36,11 @@ header h1 {
     letter-spacing: 2px;
 }
 
-/* Intro */
 .intro {
     text-align: center;
     margin: 3rem 0;
 }
 
-/* Grille des Jeux */
 .games-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -52,7 +48,6 @@ header h1 {
     margin-bottom: 4rem;
 }
 
-/* Cartes de Jeu */
 .game-card {
     background: var(--bg-card);
     border-radius: 12px;
@@ -89,7 +84,6 @@ header h1 {
     font-size: 1.1rem;
 }
 
-/* Zone d'affichage du jeu */
 .game-viewport {
     height: 300px;
     display: flex;
@@ -108,10 +102,25 @@ header h1 {
     text-align: center;
 }
 
-.wallet-container {
+.header-layout {
     display: flex;
-    justify-content: flex-end;
-    margin: -2rem 0 3rem 0; 
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.header-wallet {
+    margin: 0; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    padding: 0.5rem 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .header-layout {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
 }
 
 .wallet-card {
