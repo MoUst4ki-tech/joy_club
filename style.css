@@ -161,3 +161,92 @@ footer {
     padding: 2rem 0;
     margin-top: auto;
 }
+
+/* --- Styles pour le Jeu 1 --- */
+.dice-game {
+    text-align: center;
+    width: 100%;
+}
+
+.btn-jouer {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-jouer:hover {
+    background-color: #4f46e5;
+}
+
+.dice-result {
+    font-size: 3.5rem;
+    margin: 10px 0;
+}
+
+.game-message {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    color: var(--text-main);
+    min-height: 20px;
+}
+
+.secret-link {
+    display: inline-block;
+    background-color: #10b981; /* Vert succès */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+}
+
+.secret-link:hover {
+    transform: scale(1.05);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Style pour le lien portail sur la home */
+.game-link-portal {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.dice-icon-large {
+    font-size: 5rem;
+    transition: transform 0.3s ease;
+}
+
+.game-link-portal:hover .dice-icon-large {
+    transform: scale(1.2) rotate(15deg);
+}
+
+.play-label {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: var(--primary);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+/* Styles spécifiques pour la page du jeu */
+.game-container-focus {
+    max-width: 600px;
+    margin: 4rem auto;
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
