@@ -108,6 +108,42 @@ header h1 {
     text-align: center;
 }
 
+.wallet-container {
+    display: flex;
+    justify-content: center;
+    margin: -2rem 0 3rem 0; /* Chevauche un peu le header pour le style */
+}
+
+.wallet-card {
+    background: var(--bg-card);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wallet-label {
+    font-weight: bold;
+    color: var(--secondary);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.wallet-value {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--accent);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.wallet-unit {
+    font-weight: bold;
+    color: var(--text-main);
+}
+
 /* Footer */
 footer {
     background-color: var(--secondary);
