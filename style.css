@@ -110,8 +110,8 @@ header h1 {
 
 .wallet-container {
     display: flex;
-    justify-content: center;
-    margin: -2rem 0 3rem 0; /* Chevauche un peu le header pour le style */
+    justify-content: flex-end;
+    margin: -2rem 0 3rem 0; 
 }
 
 .wallet-card {
