@@ -45,8 +45,36 @@
                     <span class="game-badge">Jeu 2</span>
                     <h3>La Roulette de la Fortune</h3>
                 </div>
-                <div class="game-viewport">
-                    <p class="placeholder-text">En attente d'implémentation...</p>
+                <div class="game-viewport" style="height: auto;"> <div class="roulette-container" id="roulette-game">
+                        <div class="roulette-wheel-area">
+                            <div id="roulette-result" class="result-display">?</div>
+                            <p id="roulette-message">Faites vos jeux !</p>
+                        </div>
+                    
+                        <div class="betting-board">
+                            <div class="bet-input-group">
+                                <label for="bet-amount">Votre mise (🥚) :</label>
+                                <input type="number" id="bet-amount" min="1" value="10">
+                            </div>
+                    
+                            <div class="bet-options">
+                                <p class="bet-title">Sur quoi pariez-vous ?</p>
+                                <div class="bet-buttons">
+                                    <button class="bet-btn btn-red" id="bet-red" data-bet-type="red">Rouge (x2)</button>
+                                    <button class="bet-btn btn-black" id="bet-black" data-bet-type="black">Noir (x2)</button>
+                                    
+                                    <div class="number-bet-group">
+                                        <button class="bet-btn btn-number" id="bet-number-btn" data-bet-type="number">Numéro précis (x35)</button>
+                                        <input type="number" id="bet-number-input" min="0" max="36" placeholder="0-36">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="action-area">
+                            <button id="spin-btn" class="spin-action-btn">🎰 Tourner la Roulette !</button>
+                        </div>
+                    </div>
                 </div>
             </section>
 

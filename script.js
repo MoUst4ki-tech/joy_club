@@ -15,6 +15,7 @@ function updateBalance(amount) {
     console.log("Nouveau solde : " + userBalance);
 }
 
+<<<<<<< HEAD
 // --- JEU 1 ---
 function lancerJeu1() {
     let message = document.getElementById("message-jeu1");
@@ -48,3 +49,5 @@ function lancerJeu1() {
         }
     }, 200); // Petit délai de 0.2s pour l'effet visuel
 }
+=======
+>>>>>>> e1bbc96c7a27dc09914b358f4d44dd906928dfe6
