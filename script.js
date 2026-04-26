@@ -86,50 +86,120 @@ if (btnLancerDe) {
     };
 }
 
-// --- 3. LOGIQUE DE LA ROULETTE ---
+// --- 3. LOGIQUE DE LA ROULETTE (VERSION ANIMÉE) ---
 const spinBtn = document.getElementById('spin-btn');
-if (spinBtn) {
-    let currentBet = null;
-    document.getElementById('bet-red').onclick = () => currentBet = 'red';
-    document.getElementById('bet-black').onclick = () => currentBet = 'black';
-    document.getElementById('bet-number-btn').onclick = () => currentBet = 'number';
+const wheelEl = document.getElementById('real-roulette-wheel');
+const ballTrack = document.getElementById('ball-track');
+const resultInner = document.getElementById('roulette-result-display');
+const betNumberInput = document.getElementById('bet-number-input');
+
+if (spinBtn && wheelEl) {
+    let currentBetType = null;
+    let currentWheelRot = 0;
+    let currentBallRot = 0;
+
+    const redNumbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
+    const wheelOrder = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
+    const sliceAngle = 360 / 37;
+
+    // Initialisation de la roue visuelle
+    function initWheel() {
+        wheelEl.innerHTML = '';
+        let gradientParts = [];
+        wheelOrder.forEach((num, index) => {
+            let color = '#1e293b'; // Noir
+            if (num === 0) color = '#22c55e'; // Vert
+            else if (redNumbers.includes(num)) color = '#ef4444'; // Rouge
+            
+            let startAngle = index * sliceAngle;
+            let endAngle = (index + 1) * sliceAngle;
+            gradientParts.push(`${color} ${startAngle}deg ${endAngle}deg`);
+
+            let numEl = document.createElement('div');
+            numEl.classList.add('wheel-number');
+            numEl.innerText = num;
+            let midAngle = startAngle + (sliceAngle / 2);
+            numEl.style.transform = `rotate(${midAngle}deg) translateY(-110px)`;
+            wheelEl.appendChild(numEl);
+        });
+        wheelEl.style.background = `conic-gradient(${gradientParts.join(', ')})`;
+    }
+    initWheel();
+
+    // Sélection des paris
+    const clearBets = () => document.querySelectorAll('.bet-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('bet-red').onclick = (e) => { clearBets(); e.target.classList.add('selected'); currentBetType = 'red'; };
+    document.getElementById('bet-black').onclick = (e) => { clearBets(); e.target.classList.add('selected'); currentBetType = 'black'; };
+    document.getElementById('bet-number-btn').onclick = (e) => { clearBets(); e.target.classList.add('selected'); currentBetType = 'number'; betNumberInput.focus(); };
 
     spinBtn.onclick = function() {
         let mise = parseInt(document.getElementById('bet-amount').value);
         let msg = document.getElementById('roulette-message');
-        let resCir = document.getElementById('roulette-result');
 
-        if (!currentBet || userBalance < mise) { msg.innerText = "Pari invalide !"; return; }
+        if (!currentBetType || isNaN(mise) || mise <= 0 || userBalance < mise) {
+            msg.innerText = "Pari ou mise invalide !";
+            return;
+        }
 
+        let specificNumber = null;
+        if (currentBetType === 'number') {
+            specificNumber = parseInt(betNumberInput.value);
+            if (isNaN(specificNumber) || specificNumber < 0 || specificNumber > 36) {
+                msg.innerText = "Numéro entre 0 et 36 requis."; return;
+            }
+        }
+
+        // Lancement
         updateBalance(-mise);
-        resCir.innerText = "🎰";
-        this.disabled = true;
+        spinBtn.disabled = true;
+        msg.innerText = "La roue tourne...";
+        resultInner.innerText = "?";
+
+        // Calcul du résultat
+        const resNum = Math.floor(Math.random() * 37);
+        const resCol = resNum === 0 ? 'green' : (redNumbers.includes(resNum) ? 'red' : 'black');
+        const winningIndex = wheelOrder.indexOf(resNum);
+
+        // Animation
+        const targetAngle = (winningIndex * sliceAngle) + (sliceAngle / 2);
+        currentWheelRot += (360 * 5) + (360 - (currentWheelRot % 360)) + (360 - targetAngle);
+        currentBallRot -= (360 * 8); // La balle tourne dans l'autre sens
+
+        wheelEl.style.transform = `rotate(${currentWheelRot}deg)`;
+        ballTrack.style.transform = `rotate(${currentBallRot}deg)`;
 
         setTimeout(() => {
-            this.disabled = false;
-            let num = Math.floor(Math.random() * 37);
-            let reds = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
-            let col = num === 0 ? 'green' : (reds.includes(num) ? 'red' : 'black');
-
-            resCir.innerText = num;
-            resCir.style.backgroundColor = col === 'red' ? '#ef4444' : (col === 'black' ? '#1e293b' : '#10b981');
-            resCir.style.color = "white";
-
+            spinBtn.disabled = false;
+            resultInner.innerText = resNum;
+            
             let win = false;
-            if (currentBet === 'red' && col === 'red') win = true;
-            else if (currentBet === 'black' && col === 'black') win = true;
-            else if (currentBet === 'number' && parseInt(document.getElementById('bet-number-input').value) === num) win = true;
+            if (currentBetType === 'red' && resCol === 'red') win = true;
+            else if (currentBetType === 'black' && resCol === 'black') win = true;
+            else if (currentBetType === 'number' && specificNumber === resNum) win = true;
+
+            const popup = document.getElementById('popup-resultat-roulette');
+            const pText = document.getElementById('popup-texte-roulette');
+            const pEmoji = document.getElementById('popup-emoji');
+            const pTitre = document.getElementById('popup-titre');
 
             if (win) {
-                let gain = currentBet === 'number' ? mise * 35 : mise * 2;
-                msg.innerText = `GAGNÉ ! (+${gain})`;
+                let gain = currentBetType === 'number' ? mise * 35 : mise * 2;
                 updateBalance(gain);
-            } else { msg.innerText = "Perdu..."; }
-        }, 1000);
+                fanfareVictoire(); // Utilise le son de victoire existant
+                pEmoji.innerText = "🐓💰";
+                pTitre.innerText = "LE COQ EST RICHE !";
+                pText.innerText = `Le numéro ${resNum} est sorti. Tu gagnes ${gain} œufs !`;
+            } else {
+                sonDefaite(); // Utilise le son de défaite existant
+                pEmoji.innerText = "🐔💨";
+                pTitre.innerText = "POULET PLUMÉ...";
+                pText.innerText = `Le numéro ${resNum} est sorti. Tu as perdu ta mise.`;
+            }
+            popup.classList.remove('hidden');
+            msg.innerText = "Faites vos jeux !";
+        }, 4000);
     };
 }
-
-window.fermerPopup = () => document.getElementById('popup-poule').classList.add('hidden');
 
 // --- 4. SONS DE LA COURSE ---
 let audioCtx = null;
