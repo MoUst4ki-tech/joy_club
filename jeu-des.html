@@ -36,34 +36,39 @@
             <p id="message-jeu" style="margin-top: 1.5rem; min-height: 1.5em;"></p>
         </div>
     </main>
+    <div id="popup-poule" class="popup-overlay hidden">
+        <div class="popup-content">
+            <div class="poule-emoji">🐔</div>
+            <h3>Cot Cot Codet !</h3>
+            <p>Incroyable ! Tu as gagné 6 œufs dorés !</p>
+            <button onclick="fermerPopup()" class="btn-jouer">Super !</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
     <script>
         updateDisplay();
-
         function jouerAuDe() {
             if (userBalance <= 0) {
                 document.getElementById('message-jeu').innerText = "Plus d'œufs dorés !";
                 return;
             }
-
             updateBalance(-1);
-
             let resultat = Math.floor(Math.random() * 6) + 1;
             document.getElementById('resultat-de').innerText = "🎲";
-
             setTimeout(() => {
                 document.getElementById('resultat-de').innerText = resultat;
-                const case1 = document.getElementById('case-1');
-                
                 if (resultat === 6) {
                     document.getElementById('message-jeu').innerHTML = "<strong>GAGNÉ !</strong> Tu as obtenu 6 œufs dorés.";
                     updateBalance(6);
+                    document.getElementById('popup-poule').classList.remove('hidden');
                 } else {
                     document.getElementById('message-jeu').innerText = "Dommage...";
-                    case1.style.display = "none";
                 }
             }, 300);
+        }
+        function fermerPopup() {
+            document.getElementById('popup-poule').classList.add('hidden');
         }
     </script>
 </body>

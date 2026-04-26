@@ -198,7 +198,7 @@ footer {
 
 .secret-link {
     display: inline-block;
-    background-color: #10b981; /* Vert succès */
+    background-color: #10b981;
     color: white;
     padding: 10px 20px;
     border-radius: 8px;
@@ -216,7 +216,6 @@ footer {
     display: none !important;
 }
 
-/* Style pour le lien portail sur la home */
 .game-link-portal {
     text-decoration: none;
     color: inherit;
@@ -240,7 +239,6 @@ footer {
     font-size: 0.8rem;
 }
 
-/* Styles spécifiques pour la page du jeu */
 .game-container-focus {
     max-width: 600px;
     margin: 4rem auto;
@@ -249,4 +247,44 @@ footer {
     border-radius: 20px;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     text-align: center;
+}
+
+/* --- Styles pour la Pop-up Poule --- */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 2rem 3rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    border: 4px solid var(--accent);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.poule-emoji {
+    font-size: 5rem;
+    margin-bottom: 0.5rem;
+    animation: bounce 0.8s infinite alternate;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
 }
