@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roulette - Joy Club</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,8 +16,10 @@
                 <a href="index.html" class="back-link">← Retour au Club</a>
             </div>
             <div class="wallet-card header-wallet">
+                <span class="wallet-label">Wallet :</span>
                 <span id="gold-eggs-display" class="wallet-value">100</span>
                 <span class="wallet-unit">🥚</span>
+                <button onclick="rechargerFonds()" class="btn-sos">SOS 🏦</button>
             </div>
         </div>
     </header>
