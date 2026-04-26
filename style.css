@@ -377,61 +377,6 @@ input[type="number"]:focus {
 }
 .rolling { animation: rollDice 0.4s ease-in-out infinite; display: inline-block; }
 
-/* ===== ROULETTE ===== */
-.roulette-wheel-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 1.8rem;
-}
-
-.result-circle {
-    width: 110px;
-    height: 110px;
-    line-height: 110px;
-    font-size: 2.5rem;
-    font-weight: 900;
-    border-radius: 50%;
-    background: var(--dark-panel);
-    border: 3px solid var(--gold-dark);
-    text-align: center;
-    box-shadow: 0 0 30px rgba(212,175,55,.15);
-    transition: background-color 0.5s, box-shadow 0.5s;
-    color: var(--text);
-}
-
-.betting-board { margin-bottom: 1.5rem; }
-.bet-options p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.7rem; }
-
-.bet-buttons {
-    display: flex;
-    gap: 0.7rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
-}
-
-.bet-btn {
-    padding: 0.55rem 1.1rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    color: white;
-    font-weight: 700;
-    font-size: 0.88rem;
-    font-family: 'Inter', sans-serif;
-    transition: transform 0.15s, box-shadow 0.2s;
-}
-.bet-btn:hover { transform: scale(1.06); }
-
-.btn-red   { background: linear-gradient(135deg, #c0392b, #7b241c); box-shadow: 0 4px 14px rgba(192,57,43,.3); }
-.btn-black { background: linear-gradient(135deg, #2c2c3e, #1a1a28); border: 1px solid #444; }
-.btn-number { background: linear-gradient(135deg, #5b4fcf, #3d35a0); box-shadow: 0 4px 14px rgba(91,79,207,.3); }
-
-.number-bet { display: flex; gap: 0.5rem; align-items: center; }
-.number-bet input { width: 80px; }
-
 /* ===== COURSE DE POULETS ===== */
 .game-odds {
     color: var(--text-muted);
