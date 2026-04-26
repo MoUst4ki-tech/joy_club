@@ -628,3 +628,57 @@ input[type="number"]:focus {
     outline: 3px solid var(--gold);
     transform: scale(1.05);
 }
+
+.bet-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.bet-options .bet-btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    color: white;
+    transition: transform 0.2s, box-shadow 0.2s, outline 0.2s;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.bet-options .bet-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+.btn-red {
+    background: linear-gradient(135deg, var(--danger) 0%, #900 100%);
+    border-bottom: 4px solid #700;
+}
+
+.btn-black {
+    background: linear-gradient(135deg, #444 0%, #000 100%);
+    border-bottom: 4px solid #000;
+}
+
+.btn-number {
+    background: linear-gradient(135deg, var(--success) 0%, #0a5022 100%);
+    border-bottom: 4px solid #052c11;
+}
+
+.number-bet {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.number-bet input {
+    height: 100%;
+    width: 80px;
+    margin: 0;
+}
