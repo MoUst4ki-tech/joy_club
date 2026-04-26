@@ -220,11 +220,148 @@ header {
     } 
 }
 
-@keyframes bounce { 
-    0% { 
-        transform: translateY(0); 
-    } 
-    100% { 
-        transform: translateY(-15px); 
-    } 
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-15px);
+    }
+}
+
+/* ===== COURSE DE POULETS ===== */
+.back-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.game-odds {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.race-track {
+    background: #1a1a2e;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--accent);
+}
+
+.race-lane {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.4rem 0;
+    background: #16213e;
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    transition: background 0.4s;
+}
+
+.lane-label {
+    font-size: 1.1rem;
+    min-width: 48px;
+    text-align: center;
+    color: white;
+}
+
+.track-bar {
+    flex: 1;
+    height: 38px;
+    background: #0f3460;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.chicken-runner {
+    position: absolute;
+    left: 0%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.finish-flag {
+    font-size: 1.4rem;
+    min-width: 28px;
+    text-align: center;
+}
+
+.race-lane.winner-lane {
+    background: rgba(16, 185, 129, 0.25);
+    border: 1px solid var(--success);
+}
+
+.race-lane.loser-lane {
+    opacity: 0.4;
+}
+
+.betting-area-course {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.select-label {
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+}
+
+.chicken-btns {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.chicken-btn {
+    background: var(--secondary);
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    min-width: 70px;
+    border-radius: 8px;
+    transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.chicken-btn.selected-chicken {
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+    transform: scale(1.1);
+}
+
+.mise-area {
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.mise-area label {
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.mise-area input {
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid var(--accent);
+    text-align: center;
+    width: 90px;
+    font-size: 1rem;
+}
+
+.game-message {
+    font-size: 1.1rem;
+    font-weight: 700;
+    min-height: 1.5rem;
+    text-align: center;
 }
