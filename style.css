@@ -2,289 +2,229 @@
     --primary: #6366f1;
     --secondary: #1e293b;
     --accent: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
     --bg-body: #f8fafc;
     --bg-card: #ffffff;
     --text-main: #334155;
 }
 
 body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     background-color: var(--bg-body);
-    color: var(--text-main);
     margin: 0;
-    line-height: 1.5;
+    color: var(--text-main);
 }
 
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+.container { 
+    max-width: 1100px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem; 
 }
 
 header {
     background: linear-gradient(135deg, var(--secondary) 0%, #0f172a 100%);
-    color: white;
-    padding: 4rem 0;
-    text-align: center;
+    color: white; 
+    padding: 3rem 0; 
     border-bottom: 4px solid var(--accent);
 }
 
-header h1 {
-    font-size: 2.5rem;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.intro {
-    text-align: center;
-    margin: 3rem 0;
-}
-
-.games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
-}
-
-.game-card {
-    background: var(--bg-card);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e2e8f0;
-    transition: transform 0.2s;
-}
-
-.game-card:hover {
-    transform: translateY(-5px);
-}
-
-.game-header {
-    background-color: #f1f5f9;
-    padding: 1rem;
-    border-bottom: 1px solid #e2e8f0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.game-badge {
-    background: var(--primary);
-    color: white;
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: bold;
-}
-
-.game-card h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.game-viewport {
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    background-color: #fcfcfc;
-}
-
-.placeholder-text {
-    color: #94a3b8;
-    font-style: italic;
-    border: 2px dashed #e2e8f0;
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.header-layout {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-}
-
-.header-wallet {
-    margin: 0; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    padding: 0.5rem 1.5rem;
-}
-
-@media (max-width: 768px) {
-    .header-layout {
-        flex-direction: column;
-        gap: 1.5rem;
-        text-align: center;
-    }
+.header-layout { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
 }
 
 .wallet-card {
-    background: var(--bg-card);
-    padding: 1rem 2rem;
+    background: white; 
+    padding: 0.8rem 1.5rem; 
     border-radius: 50px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    border: 2px solid var(--accent);
-    display: flex;
-    align-items: center;
+    border: 2px solid var(--accent); 
+    display: flex; 
+    align-items: center; 
     gap: 10px;
 }
 
-.wallet-label {
+.wallet-value { 
+    font-size: 1.8rem; 
+    font-weight: 900; 
+    color: var(--accent); 
+}
+
+.btn-sos {
+    background: var(--danger); 
+    color: white; 
+    border: none; 
+    padding: 5px 10px;
+    border-radius: 5px; 
+    cursor: pointer; 
     font-weight: bold;
-    color: var(--secondary);
-    text-transform: uppercase;
-    font-size: 0.9rem;
 }
 
-.wallet-value {
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--accent);
-    font-family: 'Courier New', Courier, monospace;
+.games-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 2rem; 
+    padding: 2rem 0; 
 }
 
-.wallet-unit {
-    font-weight: bold;
-    color: var(--text-main);
-}
-
-/* Footer */
-footer {
-    background-color: var(--secondary);
-    color: #94a3b8;
-    text-align: center;
-    padding: 2rem 0;
-    margin-top: auto;
-}
-
-/* --- Styles pour le Jeu 1 --- */
-.dice-game {
-    text-align: center;
-    width: 100%;
-}
-
-.btn-jouer {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-jouer:hover {
-    background-color: #4f46e5;
-}
-
-.dice-result {
-    font-size: 3.5rem;
-    margin: 10px 0;
-}
-
-.game-message {
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-    color: var(--text-main);
-    min-height: 20px;
-}
-
-.secret-link {
-    display: inline-block;
-    background-color: #10b981;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
+.game-card {
+    background: white; 
+    border-radius: 12px; 
+    overflow: hidden;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1); 
     transition: transform 0.2s;
 }
 
-.secret-link:hover {
-    transform: scale(1.05);
+.game-card:hover { 
+    transform: translateY(-5px); 
 }
 
-.hidden {
-    display: none !important;
+.game-viewport { 
+    height: 250px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    background: #fcfcfc; 
 }
 
-.game-link-portal {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+.icon-large { 
+    font-size: 5rem; 
+    transition: transform 0.3s; 
 }
 
-.dice-icon-large {
-    font-size: 5rem;
-    transition: transform 0.3s ease;
+.game-link-portal { 
+    text-decoration: none; 
+    color: inherit; 
 }
 
-.game-link-portal:hover .dice-icon-large {
-    transform: scale(1.2) rotate(15deg);
-}
-
-.play-label {
-    margin-top: 1rem;
-    font-weight: bold;
-    color: var(--primary);
-    text-transform: uppercase;
-    font-size: 0.8rem;
+.game-link-portal:hover .icon-large { 
+    transform: scale(1.2) rotate(10deg); 
 }
 
 .game-container-focus {
-    max-width: 600px;
-    margin: 4rem auto;
-    background: white;
+    max-width: 600px; 
+    margin: 3rem auto; 
+    background: white; 
     padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; 
+    box-shadow: 0 20px 25px rgba(0,0,0,0.1); 
     text-align: center;
 }
 
-/* --- Styles pour la Pop-up Poule --- */
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+.dice-display { 
+    font-size: 6rem; 
+    margin: 1rem 0; 
 }
 
-.popup-content {
-    background-color: white;
-    padding: 2rem 3rem;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+.result-circle {
+    font-size: 4rem; 
+    width: 100px; 
+    height: 100px; 
+    line-height: 100px;
+    margin: 0 auto 1rem; 
+    border-radius: 50%; 
+    background: #e2e8f0; 
     border: 4px solid var(--accent);
-    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.poule-emoji {
-    font-size: 5rem;
-    margin-bottom: 0.5rem;
-    animation: bounce 0.8s infinite alternate;
+.btn-action {
+    background: var(--accent); 
+    color: white; 
+    border: none; 
+    padding: 1rem 2rem;
+    border-radius: 50px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    font-size: 1.2rem; 
+    width: 100%;
 }
 
-@keyframes popIn {
-    0% { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+.bet-buttons { 
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    margin-top: 1rem; 
 }
 
-@keyframes bounce {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-15px); }
+.bet-btn { 
+    padding: 10px 15px; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    color: white; 
+    font-weight: bold; 
+}
+
+.btn-red { 
+    background: var(--danger); 
+}
+
+.btn-black { 
+    background: var(--secondary); 
+}
+
+.btn-number { 
+    background: var(--primary); 
+}
+
+.input-group input { 
+    padding: 8px; 
+    border-radius: 8px; 
+    border: 2px solid var(--accent); 
+    text-align: center; 
+    width: 80px; 
+}
+
+.popup-overlay { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.7); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000; 
+}
+
+.popup-content { 
+    background: white; 
+    padding: 2rem; 
+    border-radius: 20px; 
+    text-align: center; 
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+.poule-emoji { 
+    font-size: 5rem; 
+    animation: bounce 0.8s infinite alternate; 
+}
+
+.hidden { 
+    display: none !important; 
+}
+
+/* Animations */
+@keyframes popIn { 
+    0% { 
+        transform: scale(0.5); 
+        opacity: 0; 
+    } 
+    100% { 
+        transform: scale(1); 
+        opacity: 1; 
+    } 
+}
+
+@keyframes bounce { 
+    0% { 
+        transform: translateY(0); 
+    } 
+    100% { 
+        transform: translateY(-15px); 
+    } 
 }

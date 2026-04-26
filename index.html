@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joy Club</title>
+    <title>Joy Club - Accueil</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,6 +17,7 @@
                 <span class="wallet-label">Wallet :</span>
                 <span id="gold-eggs-display" class="wallet-value">100</span>
                 <span class="wallet-unit">🥚</span>
+                <button onclick="rechargerFonds()" class="btn-sos">SOS 🏦</button>
             </div>
         </div>
     </header>
@@ -24,75 +25,51 @@
     <main class="container">
         <section class="intro">
             <h2>Nos jeux de hasard</h2>
-            <p>Trois jeux, trois chances de défier les probabilités.</p>
         </section>
+        
         <div class="games-grid">
-            <section class="game-card" id="game-1">
+            <section class="game-card">
                 <div class="game-header">
                     <span class="game-badge">Jeu 1</span>
                     <h3>Le Lancer de Dés</h3>
                 </div>
                 <a href="jeu-des.html" class="game-link-portal">
                     <div class="game-viewport">
-                        <span class="dice-icon-large">🎲</span>
+                        <span class="icon-large">🎲</span>
                         <p class="play-label">Cliquer pour jouer</p>
                     </div>
                 </a>
             </section>
 
-            <section class="game-card" id="game-2">
+            <section class="game-card">
                 <div class="game-header">
                     <span class="game-badge">Jeu 2</span>
-                    <h3>La Roulette de la Fortune</h3>
+                    <h3>La Roulette</h3>
                 </div>
-                <div class="game-viewport" style="height: auto;"> <div class="roulette-container" id="roulette-game">
-                        <div class="roulette-wheel-area">
-                            <div id="roulette-result" class="result-display">?</div>
-                            <p id="roulette-message">Faites vos jeux !</p>
-                        </div>
-                    
-                        <div class="betting-board">
-                            <div class="bet-input-group">
-                                <label for="bet-amount">Votre mise (🥚) :</label>
-                                <input type="number" id="bet-amount" min="1" value="10">
-                            </div>
-                    
-                            <div class="bet-options">
-                                <p class="bet-title">Sur quoi pariez-vous ?</p>
-                                <div class="bet-buttons">
-                                    <button class="bet-btn btn-red" id="bet-red" data-bet-type="red">Rouge (x2)</button>
-                                    <button class="bet-btn btn-black" id="bet-black" data-bet-type="black">Noir (x2)</button>
-                                    
-                                    <div class="number-bet-group">
-                                        <button class="bet-btn btn-number" id="bet-number-btn" data-bet-type="number">Numéro précis (x35)</button>
-                                        <input type="number" id="bet-number-input" min="0" max="36" placeholder="0-36">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="action-area">
-                            <button id="spin-btn" class="spin-action-btn">🎰 Tourner la Roulette !</button>
-                        </div>
+                <a href="roulette.html" class="game-link-portal">
+                    <div class="game-viewport">
+                        <span class="icon-large">🎰</span>
+                        <p class="play-label">Cliquer pour jouer</p>
                     </div>
-                </div>
+                </a>
             </section>
 
-            <section class="game-card" id="game-3">
+            <section class="game-card">
                 <div class="game-header">
                     <span class="game-badge">Jeu 3</span>
-                    <h3>Un Autre Jeu</h3>
+                    <h3>Bientôt...</h3>
                 </div>
                 <div class="game-viewport">
-                    <p class="placeholder-text">En attente d'implémentation...</p>
+                    <p class="placeholder-text">En développement</p>
                 </div>
             </section>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2026 - Équipe Joy Club - Hackathon du Hasard</p>
+        <p>&copy; 2026 - Équipe Joy Club</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

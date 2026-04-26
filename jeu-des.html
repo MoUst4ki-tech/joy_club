@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lancer de Dés - Joy Club</title>
+    <title>Dés - Joy Club</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,10 +11,9 @@
         <div class="container header-layout">
             <div class="title-group">
                 <h1>🎲 Le Lancer de Dés</h1>
-                <a href="index.html" style="color: white; text-decoration: none;">← Retour au Club</a>
+                <a href="index.html" class="back-link">← Retour au Club</a>
             </div>
             <div class="wallet-card header-wallet">
-                <span class="wallet-label">Wallet :</span>
                 <span id="gold-eggs-display" class="wallet-value">100</span>
                 <span class="wallet-unit">🥚</span>
             </div>
@@ -24,52 +23,29 @@
     <main class="container">
         <div class="game-container-focus">
             <h2>Tente ta chance !</h2>
-            <p>Fais un <strong>6</strong> pour avoir 6 œufs dorés.</p>
+            <p>Fais un <strong>6</strong> pour gagner 6x ta mise !</p>
             
-            <div id="resultat-de" style="font-size: 6rem; margin: 2rem 0;">❓</div>
+            <div class="input-group">
+                <label for="mise-de">Ta mise (🥚) :</label>
+                <input type="number" id="mise-de" min="1" value="10">
+            </div>
             
-            <button class="bouton-lancer" onclick="jouerAuDe()" 
-                    style="background: var(--accent); border: none; padding: 1rem 2rem; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.2rem;">
-                Lancer (1 🥚)
-            </button>
-
-            <p id="message-jeu" style="margin-top: 1.5rem; min-height: 1.5em;"></p>
+            <div id="resultat-de" class="dice-display">❓</div>
+            
+            <button id="btn-lancer-de" class="btn-action">Lancer le dé !</button>
+            <p id="message-jeu" class="game-status"></p>
         </div>
     </main>
+
     <div id="popup-poule" class="popup-overlay hidden">
         <div class="popup-content">
             <div class="poule-emoji">🐔</div>
             <h3>Cot Cot Codet !</h3>
-            <p>Incroyable ! Tu as gagné 6 œufs dorés !</p>
-            <button onclick="fermerPopup()" class="btn-jouer">Super !</button>
+            <p id="popup-texte"></p>
+            <button onclick="fermerPopup()" class="btn-action">Super !</button>
         </div>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        updateDisplay();
-        function jouerAuDe() {
-            if (userBalance <= 0) {
-                document.getElementById('message-jeu').innerText = "Plus d'œufs dorés !";
-                return;
-            }
-            updateBalance(-1);
-            let resultat = Math.floor(Math.random() * 6) + 1;
-            document.getElementById('resultat-de').innerText = "🎲";
-            setTimeout(() => {
-                document.getElementById('resultat-de').innerText = resultat;
-                if (resultat === 6) {
-                    document.getElementById('message-jeu').innerHTML = "<strong>GAGNÉ !</strong> Tu as obtenu 6 œufs dorés.";
-                    updateBalance(6);
-                    document.getElementById('popup-poule').classList.remove('hidden');
-                } else {
-                    document.getElementById('message-jeu').innerText = "Dommage...";
-                }
-            }, 300);
-        }
-        function fermerPopup() {
-            document.getElementById('popup-poule').classList.add('hidden');
-        }
-    </script>
 </body>
 </html>

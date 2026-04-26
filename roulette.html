@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette - Joy Club</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-layout">
+            <div class="title-group">
+                <h1>🎰 La Roulette</h1>
+                <a href="index.html" class="back-link">← Retour au Club</a>
+            </div>
+            <div class="wallet-card header-wallet">
+                <span id="gold-eggs-display" class="wallet-value">100</span>
+                <span class="wallet-unit">🥚</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="game-container-focus">
+            <div class="roulette-wheel-area">
+                <div id="roulette-result" class="result-circle">?</div>
+                <p id="roulette-message" class="game-status">Faites vos jeux !</p>
+            </div>
+
+            <div class="betting-board">
+                <div class="input-group">
+                    <label for="bet-amount">Ta mise (🥚) :</label>
+                    <input type="number" id="bet-amount" min="1" value="10">
+                </div>
+
+                <div class="bet-options">
+                    <p>Sur quoi pariez-vous ?</p>
+                    <div class="bet-buttons">
+                        <button class="bet-btn btn-red" id="bet-red">Rouge (x2)</button>
+                        <button class="bet-btn btn-black" id="bet-black">Noir (x2)</button>
+                        <div class="number-bet">
+                            <button class="bet-btn btn-number" id="bet-number-btn">Numéro (x35)</button>
+                            <input type="number" id="bet-number-input" min="0" max="36" placeholder="0-36">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="spin-btn" class="btn-action">🎰 Tourner la Roulette !</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
