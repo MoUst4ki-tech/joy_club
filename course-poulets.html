@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course de Poulets - Joy Club</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-layout">
+            <div class="title-group">
+                <a href="index.html" class="back-link">← Retour au Club</a>
+                <h1>🐔 Course de Poulets</h1>
+            </div>
+            <div class="wallet-card header-wallet">
+                <span class="wallet-label">Wallet :</span>
+                <span id="gold-eggs-display" class="wallet-value">100</span>
+                <span class="wallet-unit">🥚</span>
+                <button onclick="rechargerFonds()" class="btn-sos">SOS 🏦</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="game-container-focus">
+            <h2>Misez sur votre poulet !</h2>
+            <p class="game-odds">1 poulet sur 4 — Gain x4</p>
+
+            <!-- Piste de course -->
+            <div class="race-track">
+                <div class="race-lane" id="lane-1">
+                    <span class="lane-label">🐔 1</span>
+                    <div class="track-bar">
+                        <span class="chicken-runner" id="chicken-1">🐔</span>
+                    </div>
+                    <span class="finish-flag">🏁</span>
+                </div>
+                <div class="race-lane" id="lane-2">
+                    <span class="lane-label">🐔 2</span>
+                    <div class="track-bar">
+                        <span class="chicken-runner" id="chicken-2">🐔</span>
+                    </div>
+                    <span class="finish-flag">🏁</span>
+                </div>
+                <div class="race-lane" id="lane-3">
+                    <span class="lane-label">🐔 3</span>
+                    <div class="track-bar">
+                        <span class="chicken-runner" id="chicken-3">🐔</span>
+                    </div>
+                    <span class="finish-flag">🏁</span>
+                </div>
+                <div class="race-lane" id="lane-4">
+                    <span class="lane-label">🐔 4</span>
+                    <div class="track-bar">
+                        <span class="chicken-runner" id="chicken-4">🐔</span>
+                    </div>
+                    <span class="finish-flag">🏁</span>
+                </div>
+            </div>
+
+            <!-- Zone de mise -->
+            <div class="betting-area-course">
+                <div class="chicken-select">
+                    <p class="select-label">Choisissez votre poulet :</p>
+                    <div class="chicken-btns">
+                        <button class="bet-btn chicken-btn" data-chicken="1" id="pick-1">🐔 1</button>
+                        <button class="bet-btn chicken-btn" data-chicken="2" id="pick-2">🐔 2</button>
+                        <button class="bet-btn chicken-btn" data-chicken="3" id="pick-3">🐔 3</button>
+                        <button class="bet-btn chicken-btn" data-chicken="4" id="pick-4">🐔 4</button>
+                    </div>
+                </div>
+                <div class="mise-area">
+                    <label for="mise-course">Mise (🥚) :</label>
+                    <input type="number" id="mise-course" min="1" placeholder="Ex: 10">
+                </div>
+                <button class="btn-action" id="btn-lancer-course">🏁 Lancer la course !</button>
+                <p id="message-course" class="game-message"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Popup victoire -->
+    <div class="popup-overlay hidden" id="popup-course">
+        <div class="popup-content">
+            <span class="poule-emoji">🐔</span>
+            <h2>COT COT COT !</h2>
+            <p id="popup-texte-course">Votre poulet a gagné !</p>
+            <button onclick="document.getElementById('popup-course').classList.add('hidden')" class="btn-action">🎉 Encaisser !</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
