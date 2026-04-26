@@ -101,3 +101,199 @@ if (spinBtn) {
 }
 
 window.fermerPopup = () => document.getElementById('popup-poule').classList.add('hidden');
+
+// --- 4. SONS DE LA COURSE ---
+let audioCtx = null;
+const raceAmbiance = new Audio(encodeURI('ANMLFarm_Poules et ponte (ID 0978)_LaSonotheque.fr.mp3'));
+raceAmbiance.loop = true;
+
+function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window['webkitAudioContext'])();
+    return audioCtx;
+}
+
+function cluck(delaySeconds = 0) {
+    const ctx = getAudioCtx();
+    const t = ctx.currentTime + delaySeconds;
+
+    // Corps du claquement : bruit blanc filtré
+    const bufLen = Math.floor(ctx.sampleRate * 0.07);
+    const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < bufLen; i++) d[i] = Math.random() * 2 - 1;
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+    const bpf = ctx.createBiquadFilter();
+    bpf.type = 'bandpass';
+    bpf.frequency.setValueAtTime(2200, t);
+    bpf.frequency.exponentialRampToValueAtTime(400, t + 0.06);
+    bpf.Q.value = 1.5;
+    const g1 = ctx.createGain();
+    g1.gain.setValueAtTime(0.35, t);
+    g1.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+    noise.connect(bpf); bpf.connect(g1); g1.connect(ctx.destination);
+    noise.start(t); noise.stop(t + 0.07);
+
+    // Queue oscillante grave
+    const osc = ctx.createOscillator();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(900, t + 0.02);
+    osc.frequency.exponentialRampToValueAtTime(280, t + 0.13);
+    const g2 = ctx.createGain();
+    g2.gain.setValueAtTime(0.12, t + 0.02);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.13);
+    osc.connect(g2); g2.connect(ctx.destination);
+    osc.start(t + 0.02); osc.stop(t + 0.13);
+}
+
+function pistoletDepart() {
+    const ctx = getAudioCtx();
+    const t = ctx.currentTime;
+
+    // Bang de départ
+    const bufLen = Math.floor(ctx.sampleRate * 0.12);
+    const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < bufLen; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufLen * 0.15));
+    const noise = ctx.createBufferSource();
+    noise.buffer = buf;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(1.0, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+    noise.connect(g); g.connect(ctx.destination);
+    noise.start(t); noise.stop(t + 0.12);
+
+    // Caquètements de départ
+    for (let i = 0; i < 5; i++) cluck(0.15 + i * 0.12);
+}
+
+function stopRaceAudio() {
+    raceAmbiance.pause();
+    raceAmbiance.currentTime = 0;
+}
+
+function fanfareVictoire() {
+    const ctx = getAudioCtx();
+    [523, 659, 784, 1047].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        osc.type = 'square';
+        osc.frequency.value = freq;
+        const g = ctx.createGain();
+        const t0 = ctx.currentTime + i * 0.13;
+        g.gain.setValueAtTime(0, t0);
+        g.gain.linearRampToValueAtTime(0.18, t0 + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.25);
+        osc.connect(g); g.connect(ctx.destination);
+        osc.start(t0); osc.stop(t0 + 0.25);
+    });
+    for (let i = 0; i < 5; i++) cluck(0.6 + i * 0.18);
+}
+
+function sonDefaite() {
+    const ctx = getAudioCtx();
+    const t = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(420, t);
+    osc.frequency.exponentialRampToValueAtTime(140, t + 0.55);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.18, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(t); osc.stop(t + 0.55);
+    cluck(0.15);
+}
+
+// --- 5. LOGIQUE DE LA COURSE DE POULETS ---
+let selectedChicken = null;
+
+const pickBtns = document.querySelectorAll('.chicken-btn');
+pickBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        selectedChicken = parseInt(this.dataset.chicken);
+        pickBtns.forEach(b => b.classList.remove('selected-chicken'));
+        this.classList.add('selected-chicken');
+    });
+});
+
+const btnLancerCourse = document.getElementById('btn-lancer-course');
+if (btnLancerCourse) {
+    btnLancerCourse.onclick = function() {
+        const mise = parseInt(document.getElementById('mise-course').value);
+        const msg = document.getElementById('message-course');
+
+        if (!selectedChicken) {
+            msg.style.color = 'var(--danger)';
+            msg.innerText = "Choisissez un poulet d'abord !";
+            return;
+        }
+        if (isNaN(mise) || mise <= 0 || userBalance < mise) {
+            msg.style.color = 'var(--danger)';
+            msg.innerText = 'Mise invalide !';
+            return;
+        }
+
+        updateBalance(-mise);
+        btnLancerCourse.disabled = true;
+        pickBtns.forEach(b => b.disabled = true);
+        msg.style.color = 'var(--accent)';
+        msg.innerText = 'Les poulets sont partis ! 🏃';
+        pistoletDepart();
+        raceAmbiance.currentTime = 0;
+        raceAmbiance.play();
+
+        for (let i = 1; i <= 4; i++) {
+            const c = document.getElementById(`chicken-${i}`);
+            if (c) c.style.left = '0%';
+            const lane = document.getElementById(`lane-${i}`);
+            if (lane) lane.classList.remove('winner-lane', 'loser-lane');
+        }
+
+        const winner = Math.floor(Math.random() * 4) + 1;
+
+        const speeds = Array.from({ length: 4 }, () => Math.random() * 0.4 + 0.3);
+        speeds[winner - 1] = 1.0;
+
+        const positions = [0, 0, 0, 0];
+        const raceInterval = setInterval(() => {
+            let finished = true;
+            for (let i = 0; i < 4; i++) {
+                if (positions[i] < 88) {
+                    finished = false;
+                    positions[i] = Math.min(88, positions[i] + speeds[i]);
+                    const c = document.getElementById(`chicken-${i + 1}`);
+                    if (c) c.style.left = positions[i] + '%';
+                }
+            }
+            if (finished) {
+                clearInterval(raceInterval);
+                terminerCourse(winner, mise);
+                btnLancerCourse.disabled = false;
+                pickBtns.forEach(b => b.disabled = false);
+            }
+        }, 30);
+    };
+}
+
+function terminerCourse(winner, mise) {
+    stopRaceAudio();
+    const msg = document.getElementById('message-course');
+    for (let i = 1; i <= 4; i++) {
+        const lane = document.getElementById(`lane-${i}`);
+        if (lane) lane.classList.add(i === winner ? 'winner-lane' : 'loser-lane');
+    }
+    if (winner === selectedChicken) {
+        const gain = mise * 4;
+        updateBalance(gain);
+        fanfareVictoire();
+        msg.style.color = 'var(--success)';
+        msg.innerText = `🎉 Poulet ${winner} gagne ! +${gain} 🥚`;
+        document.getElementById('popup-texte-course').innerText = `Votre poulet 🐔${winner} a gagné ! +${gain} œufs !`;
+        document.getElementById('popup-course').classList.remove('hidden');
+    } else {
+        sonDefaite();
+        msg.style.color = 'var(--danger)';
+        msg.innerText = `Poulet ${winner} gagne... Perdu ! 😢`;
+    }
+}
