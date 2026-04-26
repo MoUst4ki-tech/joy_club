@@ -27,6 +27,29 @@ function rechargerFonds() {
 updateDisplay(); // Initialisation
 
 // --- 2. LOGIQUE DU JEU DE DÉ ---
+
+function getDiceHTML(number) {
+    let dots = '';
+    let colorClass = (number === 6) ? 'red' : ''; 
+    const patterns = {
+        1: [4],
+        2: [0, 8],
+        3: [0, 4, 8],
+        4: [0, 2, 6, 8],
+        5: [0, 2, 4, 6, 8],
+        6: [0, 2, 3, 5, 6, 8]
+    };
+    
+    for (let i = 0; i < 9; i++) {
+        if (patterns[number].includes(i)) {
+            dots += `<div class="dot ${colorClass}"></div>`;
+        } else {
+            dots += `<div></div>`;
+        }
+    }
+    return `<div class="dice-css">${dots}</div>`;
+}
+
 const btnLancerDe = document.getElementById('btn-lancer-de');
 if (btnLancerDe) {
     btnLancerDe.onclick = function() {
@@ -39,11 +62,17 @@ if (btnLancerDe) {
         }
 
         updateBalance(-mise);
-        resDe.innerText = "🎲";
+        
+        resDe.innerText = "🎲"; 
+        resDe.classList.add("rolling");
+        msg.innerText = "Le dé tourne...";
         
         setTimeout(() => {
+            resDe.classList.remove("rolling");
+            
             let res = Math.floor(Math.random() * 6) + 1;
-            resDe.innerText = res;
+            resDe.innerHTML = getDiceHTML(res);
+            
             if (res === 6) {
                 let gain = mise * 6;
                 msg.innerHTML = "GAGNÉ !";
@@ -53,7 +82,7 @@ if (btnLancerDe) {
             } else {
                 msg.innerText = "Perdu...";
             }
-        }, 400);
+        }, 800); 
     };
 }
 
