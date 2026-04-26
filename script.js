@@ -1,11 +1,10 @@
 // --- 1. GESTION DU PORTefeuille ---
-let userBalance = localStorage.getItem('userBalance') 
-    ? parseInt(localStorage.getItem('userBalance')) 
-    : 100;
+let userBalance = 100;
 
 function updateDisplay() {
-    const displays = document.querySelectorAll('#gold-eggs-display');
-    displays.forEach(d => d.innerText = userBalance);
+    const stored = localStorage.getItem('userBalance');
+    userBalance = stored !== null ? parseInt(stored) : 100;
+    document.querySelectorAll('#gold-eggs-display').forEach(d => d.innerText = userBalance);
 }
 
 function updateBalance(amount) {
@@ -24,7 +23,8 @@ function rechargerFonds() {
     }
 }
 
-updateDisplay(); // Initialisation
+updateDisplay();
+window.addEventListener('pageshow', updateDisplay);
 
 // --- 2. LOGIQUE DU JEU DE DÉ ---
 
