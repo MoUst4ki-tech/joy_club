@@ -125,34 +125,62 @@ if (spinBtn && wheelEl) {
         wheelEl.style.background = `conic-gradient(${gradientParts.join(', ')})`;
     }
     initWheel();
+// 1. Génération de la grille des numéros
+    const rtNumbers = document.getElementById('rt-numbers');
+    if (rtNumbers) {
+        let numsHtml = '';
+        for (let c = 0; c < 12; c++) {
+            numsHtml += `<div class="rt-col">`;
+            for (let r = 3; r >= 1; r--) {
+                let n = c * 3 + r;
+                let colorClass = redNumbers.includes(n) ? 'red' : 'black';
+                numsHtml += `<div class="cell ${colorClass}" data-type="number" data-val="${n}">${n}</div>`;
+            }
+            numsHtml += `</div>`;
+        }
+        rtNumbers.innerHTML = numsHtml;
+    }
 
-    // Sélection des paris
-    const clearBets = () => document.querySelectorAll('.bet-btn').forEach(b => b.classList.remove('selected'));
-    document.getElementById('bet-red').onclick = (e) => { clearBets(); e.target.classList.add('selected'); currentBetType = 'red'; };
-    document.getElementById('bet-black').onclick = (e) => { clearBets(); e.target.classList.add('selected'); currentBetType = 'black'; };
-    document.getElementById('bet-number-btn').onclick = (e) => { clearBets(); e.target.classList.add('selected'); currentBetType = 'number'; betNumberInput.focus(); };
+    currentBetType = null; 
+    let currentBetVal = null;
+    const betDisplay = document.getElementById('selected-bet-display');
 
+    // 2. Gestion des clics sur la table
+    const allCells = document.querySelectorAll('.roulette-table-wrapper .cell');
+    allCells.forEach(cell => {
+        cell.addEventListener('click', function() {
+            allCells.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+            currentBetType = this.dataset.type;
+            currentBetVal = this.dataset.val;
+            
+            // Mise à jour de l'affichage du pari
+            let betText = "Pari validé : ";
+            if(currentBetType === 'number') betText += `Numéro ${currentBetVal} (Gain x36)`;
+            else if(currentBetType === 'color') betText += `Couleur ${currentBetVal === 'red' ? 'Rouge' : 'Noire'} (Gain x2)`;
+            else if(currentBetType === 'parity') betText += `${currentBetVal === 'even' ? 'Pair' : 'Impair'} (Gain x2)`;
+            else if(currentBetType === 'half') betText += `Moitié ${currentBetVal == 1 ? '1 à 18' : '19 à 36'} (Gain x2)`;
+            else if(currentBetType === 'dozen') betText += `Douzaine ${currentBetVal} (Gain x3)`;
+            else if(currentBetType === 'column') betText += `Colonne ${currentBetVal} (Gain x3)`;
+            
+            if(betDisplay) betDisplay.innerText = betText;
+        });
+    });
+
+    // 3. Lancement de la roue
     spinBtn.onclick = function() {
         let mise = parseInt(document.getElementById('bet-amount').value);
         let msg = document.getElementById('roulette-message');
 
         if (!currentBetType || isNaN(mise) || mise <= 0 || userBalance < mise) {
-            msg.innerText = "Pari ou mise invalide !";
+            msg.innerText = "Sélectionnez une case sur le tapis et vérifiez votre mise !";
             return;
-        }
-
-        let specificNumber = null;
-        if (currentBetType === 'number') {
-            specificNumber = parseInt(betNumberInput.value);
-            if (isNaN(specificNumber) || specificNumber < 0 || specificNumber > 36) {
-                msg.innerText = "Numéro entre 0 et 36 requis."; return;
-            }
         }
 
         // Lancement
         updateBalance(-mise);
         spinBtn.disabled = true;
-        msg.innerText = "La roue tourne...";
+        msg.innerText = "Rien ne va plus ! La roue tourne...";
         resultInner.innerText = "?";
 
         // Calcul du résultat
@@ -163,7 +191,7 @@ if (spinBtn && wheelEl) {
         // Animation
         const targetAngle = (winningIndex * sliceAngle) + (sliceAngle / 2);
         currentWheelRot += (360 * 5) + (360 - (currentWheelRot % 360)) + (360 - targetAngle);
-        currentBallRot -= (360 * 8); // La balle tourne dans l'autre sens
+        currentBallRot -= (360 * 8);
 
         wheelEl.style.transform = `rotate(${currentWheelRot}deg)`;
         ballTrack.style.transform = `rotate(${currentBallRot}deg)`;
@@ -173,9 +201,26 @@ if (spinBtn && wheelEl) {
             resultInner.innerText = resNum;
             
             let win = false;
-            if (currentBetType === 'red' && resCol === 'red') win = true;
-            else if (currentBetType === 'black' && resCol === 'black') win = true;
-            else if (currentBetType === 'number' && specificNumber === resNum) win = true;
+            let multiplier = 0;
+
+            // Vérification des victoires selon le type de pari (Règles officielles de la Roulette)
+            if (resNum === 0) {
+                if (currentBetType === 'number' && currentBetVal == 0) { win = true; multiplier = 36; }
+            } else {
+                if (currentBetType === 'number' && currentBetVal == resNum) { win = true; multiplier = 36; }
+                else if (currentBetType === 'color' && resCol === currentBetVal) { win = true; multiplier = 2; }
+                else if (currentBetType === 'parity' && ((currentBetVal === 'even' && resNum % 2 === 0) || (currentBetVal === 'odd' && resNum % 2 !== 0))) { win = true; multiplier = 2; }
+                else if (currentBetType === 'half' && ((currentBetVal == 1 && resNum <= 18) || (currentBetVal == 2 && resNum >= 19))) { win = true; multiplier = 2; }
+                else if (currentBetType === 'dozen') {
+                    let dozen = Math.ceil(resNum / 12);
+                    if (currentBetVal == dozen) { win = true; multiplier = 3; }
+                }
+                else if (currentBetType === 'column') {
+                    let col = resNum % 3;
+                    if (col === 0) col = 3; // La 3ème colonne est un multiple de 3
+                    if (currentBetVal == col) { win = true; multiplier = 3; }
+                }
+            }
 
             const popup = document.getElementById('popup-resultat-roulette');
             const pText = document.getElementById('popup-texte-roulette');
@@ -183,20 +228,23 @@ if (spinBtn && wheelEl) {
             const pTitre = document.getElementById('popup-titre');
 
             if (win) {
-                let gain = currentBetType === 'number' ? mise * 35 : mise * 2;
+                let gain = mise * multiplier;
                 updateBalance(gain);
-                fanfareVictoire(); // Utilise le son de victoire existant
+                fanfareVictoire();
                 pEmoji.innerText = "🐓💰";
                 pTitre.innerText = "LE COQ EST RICHE !";
-                pText.innerText = `Le numéro ${resNum} est sorti. Tu gagnes ${gain} œufs !`;
+                pText.innerText = `Le ${resNum} est sorti ! Tu gagnes ${gain} œufs !`;
             } else {
-                sonDefaite(); // Utilise le son de défaite existant
+                sonDefaite(); 
                 pEmoji.innerText = "🐔💨";
                 pTitre.innerText = "POULET PLUMÉ...";
-                pText.innerText = `Le numéro ${resNum} est sorti. Tu as perdu ta mise.`;
+                pText.innerText = `Le ${resNum} est sorti. Tu as perdu ta mise.`;
             }
             popup.classList.remove('hidden');
             msg.innerText = "Faites vos jeux !";
+            allCells.forEach(c => c.classList.remove('selected')); // Réinitialise la sélection
+            currentBetType = null;
+            if(betDisplay) betDisplay.innerText = "Aucun pari sélectionné";
         }, 4000);
     };
 }
